@@ -1,6 +1,8 @@
 # Refine
 
-Got tired of multiple preprocessor in code ? Feel lost ? Refine will help you through that.
+Run preprocessor in C/C++ code in VSCode using GCC.
+
+Got tired of multiple preprocessor line in source code ? Feel lost ? Refine will help you through that in VSCode.
 
 ## Features
 
@@ -8,7 +10,7 @@ Got tired of multiple preprocessor in code ? Feel lost ? Refine will help you th
 
 - Put all of dependencies in working directory into one file (i.e `#include "myLib.h"`)
 
-- Summary: Running GCC prepocessor with minimal changes to source code
+- Running GCC prepocessor with minimal changes to source code
 
 ## Requirements
 
@@ -22,7 +24,7 @@ No requirement here, just install and you're done.
 
 ## Known Issues
 
-- Changing "refine-c.enableLanguages" can make Refine failed to run
+- Changing `refine-c.enableLanguages` can make Refine failed to run
 
 ## Release Notes
 
