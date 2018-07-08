@@ -1,9 +1,14 @@
 {
     "name": "refine-c",
     "displayName": "Refine",
-    "description": "Remove #define in C/C++ code using GCC",
+    "description": "Run preprocessor in C/C++ code using GCC",
     "version": "0.0.1",
     "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dungwinux/refine-c.git"
+    },
+    "license": "MIT",
     "publisher": "dungwinux",
     "author": "Nguyen Tuan Dung <ntddebugger@gmail.com>",
     "galleryBanner": {
