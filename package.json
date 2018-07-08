@@ -3,7 +3,7 @@
     "displayName": "Refine",
     "description": "Run preprocessor in C/C++ code using GCC",
     "version": "0.0.1",
-    "icon": "icon.png",
+    "icon": "image/icon.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/dungwinux/refine-c.git"

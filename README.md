@@ -10,8 +10,6 @@ Got tired of multiple preprocessor in code ? Feel lost ? Refine will help you th
 
 - Summary: Running GCC prepocessor with minimal changes to source code
 
-![Refine in Action](.\image\action.gif)
-
 ## Requirements
 
 No requirement here, just install and you're done.
