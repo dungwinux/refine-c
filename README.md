@@ -28,9 +28,13 @@ No requirement here, just install and you're done.
 
 ## Release Notes
 
-### 0.0.2
+### 0.0.3
 
 - Fix bug relate to file path
+
+### 0.0.2
+
+- (Temporary) Fix bug relate to file path
 
 ### 0.0.1
 

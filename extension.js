@@ -65,12 +65,6 @@ function activate(context) {
                 const fileName = currentWorkingFile.fileName;
 
                 // Executing
-                const execLine =
-                    "gcc -E -CC -P -undef -dI -nostdinc -x " +
-                    refineLang +
-                    ' "' +
-                    fileName +
-                    '"';
                 const process = cp.spawn("gcc", [
                     "-E",
                     "-CC",
@@ -83,15 +77,6 @@ function activate(context) {
                     fileName
                 ]);
 
-                console.log(execLine);
-                // cp.exec(execLine, (err, stdout, stderr) => {
-                //     if (stderr)
-                //         vscode.window.showInformationMessage(
-                //             "Problem: ",
-                //             stderr
-                //         );
-                //     fs.writeFile(fileName, stdout);
-                // });
                 process.stdout.on("data", stdout => {
                     fs.writeFile(fileName, stdout);
                 });
