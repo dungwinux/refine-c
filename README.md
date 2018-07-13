@@ -28,6 +28,10 @@ No requirement here, just install and you're done.
 
 ## Release Notes
 
+### 0.0.2
+
+- Fix bug relate to file path
+
 ### 0.0.1
 
-Initial release
+- Initial release
