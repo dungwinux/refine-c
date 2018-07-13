@@ -82,7 +82,11 @@ function activate(context) {
                 // });
 
                 process.stdout.on("data", stdout => {
-                    fs.writeFile(fileName, stdout);
+                    fs.writeFile(fileName, stdout, error => {
+                        if (error)
+                            vscode.window.showErrorMessage(error.message);
+                        return;
+                    });
                 });
 
                 // Display a message box to the user
