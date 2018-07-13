@@ -57,7 +57,7 @@ function activate(context) {
                     currentWorkingFile.isUntitled ||
                     currentWorkingFile.isDirty
                 ) {
-                    vscode.window.showInformationMessage(
+                    vscode.window.showWarningMessage(
                         "Your file was not saved!"
                     );
                     return;
@@ -85,18 +85,16 @@ function activate(context) {
                     fs.writeFile(fileName, stdout, error => {
                         if (error)
                             vscode.window.showErrorMessage(error.message);
-                        return;
+                        else {
+                            // Display a message box to the user
+                            vscode.window.showInformationMessage(
+                                "Your code has been refined!"
+                            );
+                        }
                     });
                 });
-
-                // Display a message box to the user
-                vscode.window.showInformationMessage(
-                    "Your code has been refined!"
-                );
             } else
-                vscode.window.showInformationMessage(
-                    "Language is not supported!"
-                );
+                vscode.window.showWarningMessage("Language is not supported!");
         }
     );
 
