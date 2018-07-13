@@ -40,7 +40,12 @@
                 "category": "Refine",
                 "context": {
                     "where": "editor/primary",
-                    "when": ["c", "cpp", "objective-c", "objective-cpp"]
+                    "when": [
+                        "c",
+                        "cpp",
+                        "objective-c",
+                        "objective-cpp"
+                    ]
                 }
             }
         ],
@@ -48,25 +53,30 @@
             "type": "object",
             "title": "Refine - configuration",
             "properties": {
-              "refine-c.enableLanguages": {
-                "type": "array",
-                "items": {
-                  "type": "string"
+                "refine-c.enableLanguages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "A list of languages IDs to enable this extension on (Experimental).\nDon't edit unless you know what you're doing."
                 },
-                "default": [],
-                "description": "A list of languages IDs to enable this extension on (Experimental).\nDon't edit unless you know what you're doing."
-              },
-              "refine-c.refineLanguage": {
-                "type": "string",
-                "enum": ["none", "c", "c-header",
-                    "c++", "c++-header",
-                    "objective-c", "objective-c-header",
-                    "objective-c++", "objective-c++-header"
-                ],
-                "default": "none",
-                "description": "Specify the language for `gcc`.\nIf 'none' specified, `gcc` will determine and 'refine' your code based on file type.\nMake sure you've installed the proper compiler for the language you choose."
-
-              }
+                "refine-c.refineLanguage": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "c",
+                        "c-header",
+                        "c++",
+                        "c++-header",
+                        "objective-c",
+                        "objective-c-header",
+                        "objective-c++",
+                        "objective-c++-header"
+                    ],
+                    "default": "none",
+                    "description": "Specify the language for `gcc`.\nIf 'none' specified, `gcc` will determine and 'refine' your code based on file type.\nMake sure you've installed the proper compiler for the language you choose."
+                }
             }
         },
         "menus": {
@@ -93,11 +103,13 @@
                 }
             ]
         },
-        "keybindings": [{
-            "key": "shift+alt+r",
-            "command": "refine-c.refine",
-            "when": "editorTextFocus && !editorReadonly"
-        }]
+        "keybindings": [
+            {
+                "key": "shift+alt+r",
+                "command": "refine-c.refine",
+                "when": "editorTextFocus && !editorReadonly"
+            }
+        ]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
@@ -109,5 +121,6 @@
         "eslint": "^4.11.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
-    }
+    },
+    "dependencies": {}
 }

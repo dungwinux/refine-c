@@ -40,6 +40,7 @@ function activate(context) {
         "objective-c++-header"
       ];
       if (supportLang.indexOf(refineLang) === -1) refineLang = "none";
+
       // Check for documentLanguage
       if (
         currentWorkingFile.languageId === "c" ||
@@ -56,14 +57,16 @@ function activate(context) {
           vscode.window.showInformationMessage("Your file was not saved!");
           return;
         }
-        const fileName = currentWorkingFile.fileName;
+        const fileName = (currentWorkingFile.fileName);
 
         // Executing
         const execLine =
           "gcc -E -CC -P -undef -dI -nostdinc -x " +
           refineLang +
-          " " +
-          fileName;
+          ' "' +
+          fileName +
+          '"';
+        console.log(execLine);
         cp.exec(execLine, (err, stdout, stderr) => {
           if (stderr) vscode.window.showInformationMessage("Problem: ", stderr);
           fs.writeFile(fileName, stdout);
