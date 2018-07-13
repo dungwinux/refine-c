@@ -2,7 +2,7 @@
     "name": "refine-c",
     "displayName": "Refine",
     "description": "Run preprocessor in C/C++ code using GCC",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "icon": "image/icon.png",
     "repository": {
         "type": "git",
