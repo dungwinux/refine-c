@@ -2,7 +2,6 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
 const cp = require("child_process");
-// Futur use ?
 const { EOL } = require("os");
 
 // this method is called when your extension is activated
@@ -13,6 +12,16 @@ function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('"refine-c" is now active!');
+    function exec(command) {
+        return new Promise((resolve, reject) => {
+            cp.exec(command, { timeout: 5000 }, (error, stdout, stderr) => {
+                if (error) {
+                    reject({ error, stderr });
+                }
+                resolve({ stdout, stderr });
+            });
+        });
+    }
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
@@ -68,7 +77,7 @@ function activate(context) {
                 const fileName = cwf.fileName;
 
                 // Executing
-                const process = cp.spawn(executable, [
+                let param = [
                     "-E",
                     "-CC",
                     "-P",
@@ -78,34 +87,43 @@ function activate(context) {
                     "-x",
                     refineLang,
                     fileName
-                ]);
+                ].reduce((x, y) => x + " " + y, "");
+                let command = executable + param;
+                exec(command)
+                    .then(({ stdout, stderr }) => {
+                        let refinedDoc = stdout.toString();
+                        // Need some test related to EOF in refinedDoc
 
-                process.stderr.on("data", (data) => {
-                    vscode.window.showErrorMessage(
-                        "There're some errors while refining!"
-                    );
-                    data.toString()
-                        .split(EOL)
-                        .forEach(_channel.appendLine);
-                });
+                        if (stderr) {
+                            stderr.split(EOL).forEach(_channel.appendLine);
+                            vscode.window.showErrorMessage(
+                                "There're some errors while refining!"
+                            );
+                        }
 
-                process.stdout.on("data", (stdout) => {
-                    let refinedDoc = stdout.toString();
-                    // Need some test related to EOF in refinedDoc
+                        let oldRange = new vscode.Range(0, 0, cwf.lineCount, 0);
+                        oldRange = cwf.validateRange(oldRange);
 
-                    let oldRange = new vscode.Range(0, 0, cwf.lineCount, 0);
-                    oldRange = cwf.validateRange(oldRange);
-
-                    const edit = new vscode.WorkspaceEdit();
-                    edit.replace(cwf.uri, oldRange, refinedDoc);
-                    return vscode.workspace
-                        .applyEdit(edit)
-                        .then(() =>
-                            vscode.window.showInformationMessage(
-                                "Your code has been refined!"
-                            )
-                        );
-                });
+                        const edit = new vscode.WorkspaceEdit();
+                        edit.replace(cwf.uri, oldRange, refinedDoc);
+                        return vscode.workspace
+                            .applyEdit(edit)
+                            .then(() =>
+                                vscode.window.showInformationMessage(
+                                    "Your code has been refined!"
+                                )
+                            );
+                    })
+                    .catch(({ error, stderr }) => {
+                        vscode.window
+                            .showErrorMessage("Failed to refine: ", "See more")
+                            .then(() => {
+                                _channel.show();
+                            });
+                        if (stderr) {
+                            stderr.split(EOL).forEach(_channel.appendLine);
+                        }
+                    });
             } else
                 vscode.window.showWarningMessage("Language is not supported!");
         }
