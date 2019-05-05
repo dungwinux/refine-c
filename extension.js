@@ -22,7 +22,9 @@ function activate(context) {
             const enableLanguage = vscode.workspace
                 .getConfiguration("refine-c")
                 .get("enableLanguages");
-            // console.log(enableLanguage);
+            const executable = vscode.workspace
+                .getConfiguration("refine-c")
+                .get("executable");
 
             // Check refineLanguage
             let refineLang = vscode.workspace
@@ -66,7 +68,7 @@ function activate(context) {
                 const fileName = currentWorkingFile.fileName;
 
                 // Executing
-                const process = cp.spawn("gcc", [
+                const process = cp.spawn(executable, [
                     "-E",
                     "-CC",
                     "-P",

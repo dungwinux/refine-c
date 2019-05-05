@@ -76,6 +76,15 @@
                     ],
                     "default": "none",
                     "description": "Specify the language for `gcc`.\nIf 'none' specified, `gcc` will determine and 'refine' your code based on file type.\nMake sure you've installed the proper compiler for the language you choose."
+                },
+                "refine-c.executable": {
+                    "type": "string",
+                    "enum": [
+                        "clang",
+                        "gcc"
+                    ],
+                    "default": "clang",
+                    "description": "Choose executable as refiner"
                 }
             }
         },
