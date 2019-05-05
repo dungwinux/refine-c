@@ -28,7 +28,7 @@ function activate(context) {
             let refineLang = vscode.workspace
                 .getConfiguration("refine-c")
                 .get("refineLanguage");
-            const supportLang = [
+            const supportLangParam = [
                 "none",
                 "c",
                 "c-header",
@@ -39,20 +39,21 @@ function activate(context) {
                 "objective-c++",
                 "objective-c++-header"
             ];
-            if (supportLang.indexOf(refineLang) === -1) refineLang = "none";
+            if (supportLangParam.indexOf(refineLang) === -1)
+                refineLang = "none"; // auto
 
             // Check for documentLanguage
-            if (
-                currentWorkingFile.languageId === "c" ||
-                currentWorkingFile.languageId === "cpp" ||
-                currentWorkingFile.languageId === "objective-c" ||
-                currentWorkingFile.languageId === "objective-cpp" ||
-                enableLanguage.indexOf(currentWorkingFile.languageId) !== -1
-            ) {
-                if (!currentWorkingFile) {
-                    vscode.window.showInformationMessage("No file was chosen!");
-                    return;
-                }
+            const supportLangId = [
+                "c",
+                "cpp",
+                "objective-c",
+                "objective-cpp"
+            ].concat(enableLanguage);
+            if (!currentWorkingFile) {
+                vscode.window.showInformationMessage("No file was chosen!");
+                return;
+            }
+            if (supportLangId.indexOf(currentWorkingFile.languageId) !== -1) {
                 if (
                     currentWorkingFile.isUntitled ||
                     currentWorkingFile.isDirty
@@ -77,12 +78,12 @@ function activate(context) {
                     fileName
                 ]);
 
-                // process.stderr.on("data", data => {
+                // process.stderr.on("data", (data) => {
                 //     console.log(`stderr: ${data}`);
                 // });
 
-                process.stdout.on("data", stdout => {
-                    fs.writeFile(fileName, stdout, error => {
+                process.stdout.on("data", (stdout) => {
+                    fs.writeFile(fileName, stdout, (error) => {
                         if (error)
                             vscode.window.showErrorMessage(error.message);
                         else {
