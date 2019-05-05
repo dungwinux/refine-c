@@ -14,10 +14,13 @@ function activate(context) {
     console.log('"refine-c" is now active!');
     function exec(command) {
         return new Promise((resolve, reject) => {
-            cp.exec(command, { timeout: 5000 }, (error, stdout, stderr) => {
-                if (error) {
-                    reject({ error, stderr });
-                }
+            cp.exec(command, { timeout: 2500 }, (error, stdout, stderr) => {
+                // if (error) {
+                //     reject({ error, stderr });
+                // }
+                // The 'error' check currently is fall through because
+                // the command always fail on windows due to path searching issue
+                // TODO: Alternative solution
                 resolve({ stdout, stderr });
             });
         });
@@ -77,15 +80,14 @@ function activate(context) {
                 const fileName = cwf.fileName;
 
                 // Executing
-                let param = [
-                    "-E",
+                const param = [
+                    "-x",
+                    refineLang,
                     "-CC",
                     "-P",
                     "-undef",
-                    "-dI",
                     "-nostdinc",
-                    "-x",
-                    refineLang,
+                    "-E",
                     fileName
                 ].reduce((x, y) => x + " " + y, "");
                 let command = executable + param;
@@ -116,7 +118,10 @@ function activate(context) {
                     })
                     .catch(({ error, stderr }) => {
                         vscode.window
-                            .showErrorMessage("Failed to refine: ", "See more")
+                            .showErrorMessage(
+                                "Failed to refine",
+                                "See error output"
+                            )
                             .then(() => {
                                 _channel.show();
                             });
